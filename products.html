@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Products - A Mart</title>
+        <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        Our Products
+    </header>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="checkout.html">Checkout</a>
+        <a href="shopingcart.html" id="cart-link">Shopping Cart (<span id="cart-count">0</span>)</a>
+    </nav>
+
+    <section>
+        <h2>Available Products</h2>
+        <p>Find your favorite products and add them to your cart!</p>
+         <table>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Add to Cart</th>
+            </tr>
+            <tr>
+                <td><img src="https://www.imagineonline.store/cdn/shop/files/iPhone_16_Teal_PDP_Image_Position_1__en-IN_a1fc96e6-04cc-4c8a-8f9b-f22f27088bc6.jpg?v=1727247742&width=1680" alt="Product 1" class="product-image"></td>
+                <td>IPhone 16</td>
+                <td>₹ 79,999</td>
+                <td><button onclick="addToCart('IPhone 16', 79999)">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td><img src="https://static.bhphoto.com/images/multiple_images/images500x500/1519810788_IMG_950545.jpg" alt="Product 2" class="product-image"></td>
+                <td>Sony Camera</td>
+                <td>₹ 1,22,999</td>
+                <td><button onclick="addToCart('Sony Camera', 122999)">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td><img src="https://media.vogue.in/wp-content/uploads/2021/10/Air-Jordans-2.jpg?v=1727247742&width=1680" alt="Product 1" class="product-image"></td>
+                <td>Nike Shoes</td>
+                <td>₹ 19,999</td>
+                <td><button onclick="addToCart('Nike Shoes', 19999)">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td><img src="https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/28086692/2025/2/15/36652724-5416-49a6-b314-582d574df7621739619749307-Highlander-Men-Dusty-Checked-Slim-Fit-Shirt-7581739619748761-1.jpg" alt="Product 1" class="product-image"></td>
+                <td>Checked Shirt</td>
+                <td>₹ 1,499</td>
+                <td><button onclick="addToCart('Checked Shirt', 1499)">Add to Cart</button></td>
+            </tr>
+             <tr>
+                <td><img src="https://www.lg.com/content/dam/channel/wcms/in/images/tvs/55un7350ptd_atr_eail_in_c/gallery/55UN7350PTD-Z-01.jpg" alt="Product 2" class="product-image"></td>
+                <td>LG Television</td>
+                <td>₹ 1,79,999</td>
+                <td><button onclick="addToCart('LG Television', 179999)">Add to Cart</button></td>
+            </tr>
+             <tr>
+                <td><img src="https://www.fastrack.in/dw/image/v2/BKDD_PRD/on/demandware.static/-/Sites-titan-master-catalog/default/dw524de752/images/Fastrack/Catalog/3072SL01_1.jpg?sw=600&sh=600" alt="Product 2" class="product-image"></td>
+                <td>Fastrack Big Time Quartz</td>
+                <td>₹ 5,795.00</td>
+                <td><button onclick="addToCart('Fastrack Big Time Quartz', 5,795.00)">Add to Cart</button></td>
+            </tr>
+        </table>
+        <div class="cart-container" id="cart-container" style="display: none;">
+            <h2>Shopping Cart</h2>
+            <div id="cart-items"></div>
+            <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+        </div>
+
+    </section>
+
+
+    <footer>
+        © 2025 A Mart. All rights reserved to Akash.
+    </footer>
+<script>
+    let cart = [];
+
+    function addToCart(productName, productPrice) {
+        cart.push({ name: productName, price: productPrice });
+
+        document.getElementById('cart-count').innerText = cart.length;
+
+        document.getElementById('cart-container').style.display = 'block';
+
+        updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        cartItemsContainer.innerHTML = ''; 
+
+        cart.forEach((item, index) => {
+            const cartItemDiv = document.createElement('div');
+            cartItemDiv.classList.add('cart-item');
+            cartItemDiv.innerHTML = `${item.name} - ₹${item.price} <span onclick="removeFromCart(${index})" style="color:red; cursor:pointer;">Remove</span>`;
+            cartItemsContainer.appendChild(cartItemDiv);
+        });
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+
+        document.getElementById('cart-count').innerText = cart.length;
+
+        updateCartDisplay();
+
+        if (cart.length === 0) {
+            document.getElementById('cart-container').style.display = 'none';
+        }
+    }
+
+    function proceedToCheckout() {
+        window.location.href = 'checkout.html';  // Redirect to checkout page
+    }
+</script>
+</body>
+</html>

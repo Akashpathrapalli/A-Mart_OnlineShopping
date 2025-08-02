@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>A Mart Online Shopping</title>
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    Welcome to A Mart
+</header>
+
+<nav>
+    <a href="home.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="checkout.html" id="cart-link">Shopping Cart (<span id="cart-count">0</span>)</a>
+</nav>
+
+<section>
+    <iframe src="D:\Akash HTML\A_Mart(Application)\A mart logo.jpg" style="width: 20%; height: 400px; border: none; overflow: hidden;"></iframe>
+    <article>
+        <h2>Our Top Products</h2>
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Add to Cart</th>
+            </tr>
+            <tr>
+                <td><img src="D:\Akash HTML\A_Mart(Application)\iphone 16.jpg" alt="Product 1" class="product-image"></td>
+                <td>IPhone 16</td>
+                <td>₹ 79,999</td>
+                <td><button onclick="addToCart('IPhone 16', 79999)">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td><img src="D:\Akash HTML\A_Mart(Application)\sony camera.jpg" alt="Product 2" class="product-image"></td>
+                <td>Sony Camera</td>
+                <td>₹ 1,22,999</td>
+                <td><button onclick="addToCart('Sony Camera', 122999)">Add to Cart</button></td>
+            </tr>
+        </table>
+
+        <h2>Place Your Order</h2>
+        <form action="/submit-order" method="POST">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="address">Address:</label><br>
+            <textarea id="address" name="address" rows="4" required></textarea><br>
+
+            <label for="payment">Payment Method:</label><br>
+            <select id="payment" name="payment">
+                <option value="credit-card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="cash-on-delivery">Cash on Delivery</option>
+            </select><br>
+
+            <button type="submit">Place Order</button>
+        </form>
+
+        <div class="cart-container" id="cart-container" style="display: none;">
+            <h2>Shopping Cart</h2>
+            <div id="cart-items"></div>
+            <button onclick="proceedToCheckout()">Proceed to Checkout</button>
+        </div>
+    </article>
+</section>
+
+<footer>
+    © 2024 A Mart. All rights reserved.
+</footer>
+
+<script>
+    let cart = [];
+
+    function addToCart(productName, productPrice) {
+        cart.push({ name: productName, price: productPrice });
+
+        document.getElementById('cart-count').innerText = cart.length;
+
+        document.getElementById('cart-container').style.display = 'block';
+
+        updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        cartItemsContainer.innerHTML = ''; 
+
+        cart.forEach((item, index) => {
+            const cartItemDiv = document.createElement('div');
+            cartItemDiv.classList.add('cart-item');
+            cartItemDiv.innerHTML = `${item.name} - ₹${item.price} <span onclick="removeFromCart(${index})" style="color:red; cursor:pointer;">Remove</span>`;
+            cartItemsContainer.appendChild(cartItemDiv);
+        });
+    }
+
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+
+        document.getElementById('cart-count').innerText = cart.length;
+
+        updateCartDisplay();
+
+        if (cart.length === 0) {
+            document.getElementById('cart-container').style.display = 'none';
+        }
+    }
+
+    function proceedToCheckout() {
+        window.location.href = 'checkout.html';  // Redirect to checkout page
+    }
+</script>
+
+</body>
+</html>
